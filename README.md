@@ -91,6 +91,8 @@ found, be prepared to do one or all of the following:
 - Submit an improved version
 - Meet again for another Project Review
 
+If the session reaches an hour in length, the assessment will end at that point.
+
 What won't happen:
 
 - You won't be yelled at, belittled, or scolded
