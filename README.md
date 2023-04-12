@@ -58,8 +58,7 @@ reference as you start blogging!
 Please make sure you have satisfied all the requirements listed in the project
 requirements page (linked at the top of the page) before scheduling the meeting.
 These required components must be completed, submitted in Canvas, and submitted
-in Oncehub or your project review will be canceled by the reviewer. Do not book an 
-appointment with your assigned Cohort Lead — be sure to choose another reviewer.
+in Oncehub or your project review will be canceled by the reviewer. 
 
 To schedule your review, please see the lesson entitled [Flex] Instructor Review: Phase 2 Project
 and use the link pro vided to select an available date and time on the scheduling site. 
