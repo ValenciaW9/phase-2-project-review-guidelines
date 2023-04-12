@@ -55,17 +55,15 @@ reference as you start blogging!
 
 ## Scheduling Your Review
 
-To schedule your review, go to
-[https://go.oncehub.com/PhaseTwoReactProjectReview][review] and select an
-available date and time on the scheduling site. Do not book an appointment with
-your assigned Cohort Lead — be sure to choose another reviewer.
-
 Please make sure you have satisfied all the requirements listed in the project
 requirements page (linked at the top of the page) before scheduling the meeting.
 These required components must be completed, submitted in Canvas, and submitted
-in ScheduleOnce or your project review will be canceled by the reviewer.
+in Oncehub or your project review will be canceled by the reviewer.
 
-[review]: https://go.oncehub.com/PhaseTwoReactProjectReview
+To schedule your review, please see the lesson entitled [Flex] Instructor
+Review: Phase 2 Project and use the link provided to select an available date
+and time on the scheduling site. Do not book an appointment with your assigned
+Cohort Lead — be sure to choose another reviewer.
 
 ## What To Expect From the Project Review
 
