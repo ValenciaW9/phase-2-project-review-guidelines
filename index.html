@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <title>Nutrition App</title>
+  <style>
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Nutrition App</h1>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#search">Search</a></li>
+      <li><a href="#foods">Foods</a></li>
+      <li><a href="#form">Add Food</a></li>
+    </ul>
+  </nav>
+  <main>
+    <section id="home">
+      <h2>Welcome to the Nutrition App!</h2>
+      <a href="https://tools.myfooddata.com/nutrition-facts-database-spreadsheet.php" target="_blank" rel="noopener noreferrer">Nutrition Facts Database</a>
+    </section>
+    <section id="search">
+      <h2>Search</h2>
+      <form id="searchForm">
+        <input type="text" id="searchInput" placeholder="Enter a food name" />
+        <button type="submit">Search</button>
+      </form>
+      <div id="searchResults"></div>
+    </section>
+    <section id="foods">
+      <h2>Foods</h2>
+      <ul id="foodList">
+        <!-- Food items will be dynamically added here -->
+      </ul>
+    </section>
+    <section id="form">
+      <h2>Add Food</h2>
+      <form id="addFoodForm">
+        <label for="foodName">Name:</label>
+        <input type="text" id="foodName" required />
+        <label for="calories">Calories:</label>
+        <input type="number" id="calories" required />
+        <label for="protein">Protein:</label>
+        <input type="number" id="protein" required />
+        <label for="fat">Fat:</label>
+        <input type="number" id="fat" required />
+        <label for="carbs">Carbs:</label>
+        <input type="number" id="carbs" required />
+        <label for="fiber">Fiber:</label>
+        <input type="number" id="fiber" required />
+        <button type="submit">Add</button>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2022 Nutrition App. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const foodList = document.getElementById('foodList');
+    const addFoodForm = document.getElementById('addFoodForm');
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    // Backend API endpoint
+    const apiEndpoint = 'http://localhost:3000/api/foods';
+    // API Key and ID
+    const apiKey = "15dacb960b2aa4adaf8db032f7c21bf5";
+    const apiId = "2d8685e9";
+
+    // Fetch all foods from backend API
+    const fetchFoods = async () => {
+      try {
+        const response = await fetch(apiEndpoint);
+        const data = await response.json();
+
+        data.forEach(food => {
+          const foodItem = document.createElement('li');
+          foodItem.textContent = `${food.name} - Calories: ${food.calories} Protein: ${food.protein} Fat: ${food.fat} Carbs: ${food.carbs} Fiber: ${food.fiber}`;
+          foodList.appendChild(foodItem);
+        });
+      } catch (error) {
+        console.log('An error occurred while fetching foods:', error);
+      }
+    };
+
+    // Add new food to backend API
+    const addFood = async (food) => {
+      try {
+        const response = await fetch(apiEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(food),
+        });
+
+        if (response.ok) {
+          const newFood = await response.json();
+          const foodItem = document.createElement('li');
+          foodItem.textContent = `${newFood.name} - Calories: ${newFood.calories} Protein: ${newFood.protein} Fat: ${newFood.fat} Carbs: ${newFood.carbs} Fiber: ${newFood.fiber}`;
+          foodList.appendChild(foodItem);
+        }
+      } catch (error) {
+        console.log('An error occurred while adding food:', error);
+      }
+    };
+
+    addFoodForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const foodName = document.getElementById('foodName').value;
+      const calories = document.getElementById('calories').value;
+      const protein = document.getElementById('protein').value;
+      const fat = document.getElementById('fat').value;
+      const carbs = document.getElementById('carbs').value;
+      const fiber = document.getElementById('fiber').value;
+
+      const food = {
+        name: foodName,
+        calories: parseInt(calories),
+        protein: parseInt(protein),
+        fat: parseInt(fat),
+        carbs: parseInt(carbs),
+        fiber: parseInt(fiber)
+      };
+
+      addFood(food);
+      addFoodForm.reset();
+    });
+
+    searchForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const searchTerm = searchInput.value.trim();
+      if (searchTerm === '') {
+        searchResults.innerHTML = 'Please enter a food name';
+        return;
+      }
+
+      fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${apiKey}&query=${searchTerm}`)
+        .then(response => response.json())
+        .then(data => {
+          searchResults.innerHTML = '';
+
+          if (data.foods.length === 0) {
+            searchResults.innerHTML = 'No results found';
+          } else {
+            data.foods.forEach(food => {
+              const foodItem = document.createElement('div');
+              foodItem.textContent = food.description;
+              searchResults.appendChild(foodItem);
+            });
+          }
+        })
+        .catch(error => {
+          searchResults.innerHTML = 'An error occurred';
+          console.log(error);
+        });
+    });
+
+    fetchFoods();
+  </script>
+</body>
+</html>
